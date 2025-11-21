@@ -30,8 +30,8 @@ header {
 .logo { font-size: 2em; font-weight: 600; color: var(--primary-color);  display: flex; align-items: center;}
 
 .logo img {
-    width: 100px;  
-    height: 100px;  
+    width: 150px;  
+    height: 150px;  
     object-fit: contain;
     display: block;
 }
