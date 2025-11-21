@@ -1,47 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insightful Traits Career Quiz</title>
-    <link rel="stylesheet" href="style.css"> 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Quiz Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <div class="logo">
-            <span class="logo-icon">💡</span> InsightfulTraits
-        </div>
-        <div class="progress-bar-container">
-            <div class="progress-bar"></div>
-        </div>
-    </header>
+<header>
+    <div class="logo">Career Quiz</div>
+</header>
 
-    <main class="quiz-container">
-        <section id="intro-screen">
-            <h2>Welcome to the Career Traits Questionnaire! 🚀</h2>
-            <p>Answer 25 questions about your interests and work style to find your top career matches in tech.</p>
-            <button id="startButton">Begin Quiz</button> 
-        </section>
+<div id="intro-screen">
+    <h1>Discover Your Ideal Tech Career</h1>
+    <p>Answer a few questions to see which tech role suits you best.</p>
+    <button id="startButton">Start Quiz</button>
+</div>
 
-        <section id="question-section" style="display:none;">
-            <div class="loading-message">Loading quiz...</div>
-        </section>
+<div id="question-section"></div>
 
-        <section id="results-section" style="display:none;">
-            <h2>Your Top Career Paths</h2>
-            <div id="results-list">
-                </div>
-            <button id="restart-button" onclick="location.reload()">Restart Quiz</button>
-        </section>
-    </main>
+<div id="results-section">
+    <h2>Your Recommended Career</h2>
+    <div id="results-list"></div>
+    <button id="restart-button">Restart Quiz</button>
+</div>
 
-    <footer class="footer">
-        A simple career aptitude test.
-    </footer>
+<div class="footer">© 2025 Career Quiz</div>
 
-    <script src="questions.js"></script>
-    <script src="script.js"></script>
+<script src="questions.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
