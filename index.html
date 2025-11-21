@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Orin Test</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insightful Traits Career Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-  <h1>Orin Test</h1>
 
-  <div id="email-section">
-    <label>Enter your email (optional):</label>
-    <input type="email" id="email" placeholder="your@example.com" />
-    <button id="start-test">Start Test</button>
-  </div>
+    <header>
+        <div class="logo">
+            <span class="logo-icon">💡</span> InsightfulTraits
+        </div>
+        <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+        </div>
+    </header>
 
-  <div id="progress-bar-container" style="display:none;">
-    <div id="progress-bar"></div>
-  </div>
+    <main class="quiz-container">
+        <section id="question-section">
+            <div class="loading-message">Loading quiz...</div>
+        </section>
 
-  <form id="quiz-form" style="display:none;"></form>
+        <section id="results-section" style="display:none;">
+            <h2>Your Top Career Paths</h2>
+            <div id="results-list">
+                </div>
+            <button id="restart-button" onclick="location.reload()">Restart Quiz</button>
+        </section>
+    </main>
 
-  <div id="result-section" style="display:none;">
-    <h2>Your Recommended Careers:</h2>
-    <ul id="results"></ul>
-    <button onclick="location.reload()">Retake Test</button>
-  </div>
-</div>
-<script src="script.js"></script>
+    <footer class="footer">
+        A simple career aptitude test.
+    </footer>
+
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
