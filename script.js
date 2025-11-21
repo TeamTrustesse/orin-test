@@ -1,41 +1,69 @@
-// Global variables (ensure these are present at the top of your script.js)
+// Global variables
 const introScreen = document.getElementById('intro-screen'); 
 const startButton = document.getElementById('startButton');   
 const questionSection = document.getElementById('question-section');
-// ... other global variables ...
+const resultsSection = document.getElementById('results-section');
+const resultsList = document.getElementById('results-list');
+const progressBar = document.querySelector('.progress-bar');
+
+const NUM_QUESTIONS = QUIZ_DATA.questions.length;
+const userAnswers = {}; // { questionId: score }
 
 // Global tracking for the current question index
 let currentQuestionIndex = 0;
 
 
+// --- CORE FUNCTIONS ---
+
 /**
- * Renders the question UI blocks. (Keep the original renderQuestions function)
+ * Renders the question UI blocks.
  */
 function renderQuestions() {
-    // ... (Your existing renderQuestions function code goes here) ...
-    // ... Make sure the question block creation ends with:
-    
+    questionSection.innerHTML = ''; // Clear loading message
+
     QUIZ_DATA.questions.forEach((q, index) => {
-        // ... (questionBlock setup) ...
+        const questionBlock = document.createElement('div');
+        questionBlock.className = 'question-block';
+        questionBlock.dataset.questionId = q.id;
         
         // **IMPORTANT:** Add a fixed top position to stack them correctly
-        questionBlock.style.top = `${index * 50}px`; // Adjust 50px as needed for spacing
+        // 120px is an estimated height for each block (can be fine-tuned with CSS)
+        questionBlock.style.top = `${index * 120}px`; 
         
         // Only show the first question initially
         if (index === 0) {
             questionBlock.classList.add('active');
         }
-        
-        // ... (questionBlock.innerHTML setup) ...
+
+        questionBlock.innerHTML = `
+            <p class="question-text">
+                <span class="question-number">Question ${index + 1} of ${NUM_QUESTIONS}:</span> ${q.text}
+            </p>
+            <div class="options-container">
+                <span class="options-label">Disagree</span>
+                <div class="options-wrapper">
+                    ${[1, 2, 3, 4, 5].map(score => `
+                        <label>
+                            <input 
+                                type="radio" 
+                                class="option-input" 
+                                name="q${q.id}" 
+                                value="${score}"
+                                onclick="handleAnswer(${q.id}, ${score}, ${index})"
+                            >
+                            <div class="option-circle"></div>
+                        </label>
+                    `).join('')}
+                </div>
+                <span class="options-label">Agree</span>
+            </div>
+        `;
         questionSection.appendChild(questionBlock);
     });
 }
 
 /**
  * Handles an answer selection, records the score, and advances the quiz.
- * @param {number} questionId - The ID of the question.
- * @param {number} score - The selected score (1-5).
- * @param {number} currentIndex - The index of the current question.
  */
 function handleAnswer(questionId, score, currentIndex) {
     userAnswers[questionId] = score;
@@ -59,13 +87,13 @@ function handleAnswer(questionId, score, currentIndex) {
         if (nextBlock) nextBlock.classList.add('active');
 
         // 2. SCROLL TO CENTER THE NEW ACTIVE QUESTION
-        // Calculate the height required to center the next question block
-        const blockHeight = nextBlock.offsetHeight; // Get the computed height of the block
+        // We use the fixed 'top' position (index * 120px) set during render.
+        const targetBlockTop = nextIndex * 120;
         const containerHeight = questionSection.clientHeight;
+        const blockHeight = 120; // Must match the value used for positioning
 
-        // Target scroll position: center the next question block
-        // (Block's top position - (Container height / 2) + (Block height / 2))
-        const targetScroll = (nextIndex * 50) - (containerHeight / 2) + (blockHeight / 2);
+        // Calculate scroll position to center the block
+        const targetScroll = targetBlockTop - (containerHeight / 2) + (blockHeight / 2);
 
         questionSection.scrollTo({
             top: targetScroll,
@@ -76,6 +104,65 @@ function handleAnswer(questionId, score, currentIndex) {
         // Quiz completed
         setTimeout(showResults, 500); 
     }
+}
+
+
+/**
+ * Calculates scores and displays the results.
+ */
+function showResults() {
+    questionSection.style.display = 'none';
+    
+    // 1. Calculate Scores for Each Role
+    const roleScores = QUIZ_DATA.roles.map(role => {
+        let totalScore = 0;
+        let answeredQuestionsCount = 0;
+
+        role.questions.forEach(qId => {
+            const score = userAnswers[qId];
+            if (score !== undefined) {
+                totalScore += score;
+                answeredQuestionsCount++;
+            }
+        });
+
+        // 2. Calculate Average Score (1-5)
+        const averageScore = answeredQuestionsCount > 0 ? (totalScore / answeredQuestionsCount) : 0;
+        
+        return {
+            name: role.name,
+            average: averageScore,
+            total: totalScore,
+            count: answeredQuestionsCount
+        };
+    });
+
+    // 3. Sort by Average Score (Highest first)
+    roleScores.sort((a, b) => b.average - a.average);
+
+    // 4. Determine Top 2 Recommended Paths
+    const topRoles = roleScores.slice(0, 2);
+
+    // 5. Render Results
+    resultsList.innerHTML = '';
+    topRoles.forEach((role, index) => {
+        const card = document.createElement('div');
+        card.className = `result-card ${index === 0 ? 'first-place' : ''}`;
+        
+        // Format the score to two decimal places
+        const formattedScore = role.average.toFixed(2);
+        
+        card.innerHTML = `
+            <h3>${index === 0 ? '🥇' : '🥈'} ${role.name}</h3>
+            <p>Score: ${formattedScore} / 5.00</p>
+            <p style="font-size:0.9em; color:#666;">
+                (Based on ${role.count} relevant questions)
+            </p>
+        `;
+        resultsList.appendChild(card);
+    });
+
+    resultsSection.style.display = 'block';
 }
 
 
@@ -94,9 +181,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // SCROLL TO CENTER THE FIRST QUESTION (Index 0)
             const firstBlock = document.querySelector('.question-block.active');
             if (firstBlock) {
-                 const blockHeight = firstBlock.offsetHeight;
                  const containerHeight = questionSection.clientHeight;
-                 // Center the first question (which is at top: 0px)
+                 const blockHeight = 120;
+                 
+                 // Initial scroll position: center the first question (which is at top: 0px)
                  const initialScroll = 0 - (containerHeight / 2) + (blockHeight / 2);
                  questionSection.scrollTo({
                      top: initialScroll,
@@ -106,4 +194,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-// (Keep the existing showResults function below this logic)
