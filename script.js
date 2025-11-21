@@ -1,4 +1,6 @@
 // Global variables
+const introScreen = document.getElementById('intro-screen'); // New reference
+const startButton = document.getElementById('startButton');   // New reference
 const questionSection = document.getElementById('question-section');
 const resultsSection = document.getElementById('results-section');
 const resultsList = document.getElementById('results-list');
@@ -7,10 +9,12 @@ const progressBar = document.querySelector('.progress-bar');
 const NUM_QUESTIONS = QUIZ_DATA.questions.length;
 const userAnswers = {}; // { questionId: score }
 
+
 // --- CORE FUNCTIONS ---
 
 /**
  * Renders the question UI blocks.
+ * (This function remains mostly the same, ensuring only the first question is active)
  */
 function renderQuestions() {
     questionSection.innerHTML = ''; // Clear loading message
@@ -52,11 +56,10 @@ function renderQuestions() {
     });
 }
 
+// ... (handleAnswer and showResults functions remain the same) ...
+
 /**
  * Handles an answer selection, records the score, and advances the quiz.
- * @param {number} questionId - The ID of the question.
- * @param {number} score - The selected score (1-5).
- * @param {number} currentIndex - The index of the current question.
  */
 function handleAnswer(questionId, score, currentIndex) {
     userAnswers[questionId] = score;
@@ -142,7 +145,18 @@ function showResults() {
     resultsSection.style.display = 'block';
 }
 
-// --- INITIALIZATION ---
+
+// --- INITIALIZATION & START BUTTON LOGIC ---
+
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Render all questions, but keep questionSection hidden via HTML style="display:none;"
     renderQuestions();
+    
+    // 2. Add the event listener for the start button to run the quiz
+    if (startButton) {
+        startButton.addEventListener('click', () => {
+            introScreen.style.display = 'none'; // Hide the welcome screen
+            questionSection.style.display = 'block'; // Show the quiz questions
+        });
+    }
 });
