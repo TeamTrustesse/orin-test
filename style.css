@@ -40,23 +40,45 @@ header {
     display: block;
 }
 
-/* header {
-    background-color: white;
-    padding: 15px 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+#next-step-container {
+    text-align: center;
+    margin-top: 30px;
 }
-.logo { font-size: 2em; font-weight: 600; color: var(--primary-color);}
 
-.logo img {
-    width: 150px;  
-    height: 150px;  
-    object-fit: contain;
-    display: block;
-} */
+.pulse-button {
+    background: linear-gradient(135deg, #4a8cff, #1d5fe6);
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 20px rgba(30, 80, 200, 0.25);
+    transition: all 0.3s ease;
+    animation: pulseGlow 2.2s infinite ease-in-out;
+}
 
+/* Hover effect */
+.pulse-button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 10px 25px rgba(30, 80, 200, 0.35);
+    background: linear-gradient(135deg, #1d5fe6, #4a8cff);
+}
+
+/* Subtle pulse animation */
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 0px rgba(30, 80, 200, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 18px rgba(30, 80, 200, 0.55);
+    }
+    100% {
+        box-shadow: 0 0 0px rgba(30, 80, 200, 0.3);
+    }
+}
 #intro-screen {
     text-align: center; 
     padding: 60px 20px;
