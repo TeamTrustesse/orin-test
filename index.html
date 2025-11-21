@@ -6,26 +6,27 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Orin Test</h1>
-    
-    <div id="email-section">
-      <label for="email">Enter your email (optional):</label>
-      <input type="email" id="email" placeholder="your@example.com">
-      <button id="start-test">Start Test</button>
-    </div>
-    
-    <form id="quiz-form" style="display:none;">
-      <div id="questions-container"></div>
-      <button type="submit">Submit Test</button>
-    </form>
+<div class="container">
+  <h1>Orin Test</h1>
 
-    <div id="result-section" style="display:none;">
-      <h2>Your Recommended Careers:</h2>
-      <ul id="results"></ul>
-    </div>
+  <div id="email-section">
+    <label>Enter your email (optional):</label>
+    <input type="email" id="email" placeholder="your@example.com" />
+    <button id="start-test">Start Test</button>
   </div>
 
-  <script src="script.js"></script>
+  <div id="progress-bar-container" style="display:none;">
+    <div id="progress-bar"></div>
+  </div>
+
+  <form id="quiz-form" style="display:none;"></form>
+
+  <div id="result-section" style="display:none;">
+    <h2>Your Recommended Careers:</h2>
+    <ul id="results"></ul>
+    <button onclick="location.reload()">Retake Test</button>
+  </div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
