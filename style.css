@@ -109,6 +109,16 @@ header {
     transition: background-color 0.3s;
 }
 
+.result-bottom-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.small-card {
+    width: 280px;
+}
+
 #startButton:hover { background-color: #306bd1; }
 
 #question-section { display:none; height: var(--quiz-height); overflow-y: scroll; padding: 20px 0; scroll-behavior: smooth; }
