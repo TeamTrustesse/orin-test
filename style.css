@@ -27,8 +27,14 @@ header {
     align-items: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
+.logo { font-size: 2em; font-weight: 600; color: var(--primary-color);  display: flex; align-items: center;}
 
-.logo { font-size: 2em; font-weight: 600; color: var(--primary-color); width: 45px;height: 45px; object-fit: contain; margin-right: 8px;}
+.logo img {
+    width: 55px;  
+    height: 55px;  
+    object-fit: contain;
+    display: block;
+}
 
 #intro-screen {
     text-align: center; 
