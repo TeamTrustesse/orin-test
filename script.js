@@ -76,47 +76,40 @@ function goToNextQuestion(currentBlock) {
         showResults();
     }
 }
-
 function showResults() {
     questionSection.style.display = "none";
     resultsSection.style.display = "block";
     resultsList.innerHTML = "";
-    nextStepContainer.style.display = "none"; // hidden until done
 
-    // Calculate score for each role
     const scores = QUIZ_DATA.roles.map(role => {
-        const total = role.questions.reduce((sum, qid) => sum + (answers[qid] || 0), 0);
+        const total = role.questions.reduce((sum,qid) => sum + (answers[qid] || 0),0);
         return { name: role.name, score: total };
     });
+    scores.sort((a,b) => b.score - a.score);
 
-    // Sort highest → lowest
-    scores.sort((a, b) => b.score - a.score);
+    const winner = scores[0];
+    const second = scores[1];
+    const third = scores[2];
 
-    // Take only top 3
-    const topThree = scores.slice(0, 3);
+    // Winner card
+    const topCard = document.createElement("div");
+    topCard.className = "result-card winner";
+    topCard.innerHTML = `<h3>${winner.name}</h3><p>${winner.score}</p>`;
+    resultsList.appendChild(topCard);
 
-    // Winner (full width)
-    const winnerCard = document.createElement("div");
-    winnerCard.className = "result-card winner";
-    winnerCard.innerHTML = `
-        <h3>${topThree[0].name}</h3>
-        <p>${topThree[0].score}</p>
-    `;
-    resultsList.appendChild(winnerCard);
-
-    // Bottom 2 side-by-side container
+    // Create bottom row wrapper
     const bottomRow = document.createElement("div");
     bottomRow.className = "result-bottom-row";
 
-    topThree.slice(1).forEach(r => {
+    [second, third].forEach(r => {
         const card = document.createElement("div");
-        card.className = "result-card small-card";
+        card.className = "small-card";
         card.innerHTML = `<h3>${r.name}</h3><p>${r.score}</p>`;
         bottomRow.appendChild(card);
     });
 
     resultsList.appendChild(bottomRow);
 
-    // Now show the "Let's Begin" button
-    nextStepContainer.style.display = "block";
+    document.getElementById("next-step-container").style.display = "block";
 }
+
