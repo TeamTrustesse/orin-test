@@ -6,7 +6,7 @@ const QUIZ_DATA = {
         { id: 3, text: "I enjoy planning, managing people, and coordinating tasks." },
         { id: 4, text: "I find satisfaction in identifying errors and improving quality." },
         { id: 5, text: "I enjoy talking to people to understand their needs and pain points." },
-        { id: 6, text: "I like understanding how technology supports business goals." },
+        { id: 6, text: "I like understanding how technology supports business goals." }, 
         
         // Section B: Thinking & Working Style
         { id: 7, text: "I prefer working with precise facts, figures, and structured data." },
