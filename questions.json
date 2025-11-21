@@ -1,40 +1,47 @@
-{
-  "Realistic": [
-    {"q": "I enjoy solving logical problems and building new things from scratch.", "roles": ["SE"]},
-    {"q": "I get a sense of satisfaction when debugging or fixing technical problems.", "roles": ["SE","QA"]},
-    {"q": "I prefer working alone and focusing deeply for long hours.", "roles": ["SE","DA"]},
-    {"q": "I get bored doing repetitive tasks.", "roles": ["SE","PM"]},
-    {"q": "I prefer technical mastery over managing people.", "roles": ["SE","DA"]}
-  ],
-  "Investigative": [
-    {"q": "I love analyzing data and discovering patterns or insights.", "roles": ["DA"]},
-    {"q": "I prefer working with precise facts, figures, and structured data.", "roles": ["DA","QA"]},
-    {"q": "I am detail-oriented and easily notice inconsistencies.", "roles": ["QA","DA"]},
-    {"q": "I remain calm and analytical under pressure.", "roles": ["PM","SE","DA"]},
-    {"q": "I’m motivated by accuracy and precision in my work.", "roles": ["QA","DA"]}
-  ],
-  "Artistic": [
-    {"q": "I enjoy creating prototypes or visualizing how users will interact with a product.", "roles": ["UI/UX"]},
-    {"q": "I enjoy talking to people to understand their needs and pain points.", "roles": ["BA","UI/UX"]},
-    {"q": "I’m comfortable working on abstract ideas and uncertain goals.", "roles": ["PM","UI/UX"]},
-    {"q": "I want to see the impact of my work quickly and visually.", "roles": ["UI/UX","QA"]}
-  ],
-  "Social": [
-    {"q": "I enjoy working in teams and leading group discussions.", "roles": ["PM","BA"]},
-    {"q": "I like convincing others and presenting ideas clearly.", "roles": ["PM","BA"]},
-    {"q": "I enjoy talking to people to understand their needs and pain points.", "roles": ["BA","UI/UX"]},
-    {"q": "I like understanding how technology supports business goals.", "roles": ["BA","PM"]}
-  ],
-  "Enterprising": [
-    {"q": "I enjoy planning, managing people, and coordinating tasks.", "roles": ["PM"]},
-    {"q": "I like leading projects and decision making.", "roles": ["PM"]},
-    {"q": "I value leadership and decision-making responsibilities.", "roles": ["PM"]},
-    {"q": "I like organizing information so others can understand it easily.", "roles": ["BA","PM"]},
-    {"q": "I feel energized by helping a team meet deadlines.", "roles": ["PM","QA"]}
-  ],
-  "Conventional": [
-    {"q": "I find satisfaction in identifying errors and improving quality.", "roles": ["QA"]},
-    {"q": "I enjoy organizing information so others can understand it easily.", "roles": ["BA","PM"]},
-    {"q": "I prefer working with precise facts, figures, and structured data.", "roles": ["DA","QA"]}
-  ]
-}
+const QUIZ_DATA = {
+    questions: [
+        // Section A: Interests
+        { id: 1, text: "I enjoy solving logical problems and building new things from scratch." },
+        { id: 2, text: "I love analyzing data and discovering patterns or insights." },
+        { id: 3, text: "I enjoy planning, managing people, and coordinating tasks." },
+        { id: 4, text: "I find satisfaction in identifying errors and improving quality." },
+        { id: 5, text: "I enjoy talking to people to understand their needs and pain points." },
+        { id: 6, text: "I like understanding how technology supports business goals." },
+        
+        // Section B: Thinking & Working Style
+        { id: 7, text: "I prefer working with precise facts, figures, and structured data." },
+        { id: 8, text: "I’m comfortable working on abstract ideas and uncertain goals." },
+        { id: 9, text: "I get a sense of satisfaction when debugging or fixing technical problems." },
+        { id: 10, text: "I enjoy breaking down business problems into clear requirements." },
+        { id: 11, text: "I like creating prototypes or visualizing how users will interact with a product." },
+        { id: 12, text: "I prefer thinking strategically and planning long-term." },
+        
+        // Section C: Working Preferences & Habits
+        { id: 13, text: "I am detail-oriented and easily notice inconsistencies." },
+        { id: 14, text: "I enjoy working in teams and leading group discussions." },
+        { id: 15, text: "I prefer working alone and focusing deeply for long hours." },
+        { id: 16, text: "I like convincing others and presenting ideas clearly." },
+        { id: 17, text: "I get bored doing repetitive tasks." },
+        { id: 18, text: "I remain calm and analytical under pressure." },
+        
+        // Section D: Motivation & Work Values
+        { id: 19, text: "I want to see the impact of my work quickly and visually." },
+        { id: 20, text: "I value leadership and decision-making responsibilities." },
+        { id: 21, text: "I prefer technical mastery over managing people." },
+        { id: 22, text: "I enjoy translating business needs into technical solutions." },
+        { id: 23, text: "I like organizing information so others can understand it easily." },
+        { id: 24, text: "I feel energized by helping a team meet deadlines." },
+        { id: 25, text: "I’m motivated by accuracy and precision in my work." }
+    ],
+    
+    // Scoring logic, mapping role to question IDs
+    roles: [
+        { name: "Software Engineer (SE)", questions: [1, 9, 15, 17, 18, 21, 22] },
+        { name: "Product Manager (PM)", questions: [3, 8, 12, 14, 16, 17, 20, 23, 24] },
+        { name: "Quality Assurance Engineer (QA)", questions: [4, 7, 9, 13, 19, 24, 25] },
+        { name: "Data Analyst (DA)", questions: [2, 7, 13, 15, 18, 21, 25] },
+        { name: "Business Analyst (BA)", questions: [5, 6, 10, 14, 16, 22, 23] },
+        { name: "UI/UX Designer", questions: [5, 8, 11, 19] },
+        { name: "Cybersecurity Analyst", questions: [1, 2, 9, 15, 18, 21] }
+    ]
+};
