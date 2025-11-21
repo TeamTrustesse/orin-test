@@ -89,4 +89,5 @@ function showResults() {
         card.innerHTML = `<h3>${r.name}</h3><p>${r.score}</p>`;
         resultsList.appendChild(card);
     });
+    document.getElementById("next-step-container").style.display = "block";
 }
