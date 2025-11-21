@@ -13,6 +13,13 @@ startButton.addEventListener("click", () => {
     loadQuestions();
 });
 
+document.getElementById('begin-button').addEventListener('click', function () {
+    // Change to your next step page
+    alert("Awesome! Let's get started.");
+    // window.location.href = "next-step.html";
+});
+
+
 restartButton.addEventListener("click", () => {
     resultsSection.style.display = "none";
     introScreen.style.display = "block";
