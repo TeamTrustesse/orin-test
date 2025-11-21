@@ -1,10 +1,11 @@
 :root {
-    --primary-color: #3e7bff; /* A nice blue for interaction */
-    --secondary-color: #27ae60; /* Green for agreement */
+    --primary-color: #3e7bff;
+    --secondary-color: #27ae60;
     --text-color: #333;
     --light-gray: #f4f7f6;
     --medium-gray: #ccc;
     --font-family: 'Poppins', sans-serif;
+    --quiz-height: 400px; /* Define a fixed height for the scroll container */
 }
 
 body {
@@ -41,7 +42,7 @@ header {
 .progress-bar-container {
     width: 300px;
     height: 8px;
-    background-color: var(--medium-gray);
+    background-color: var(--secondary-color);
     border-radius: 4px;
     overflow: hidden;
 }
@@ -49,7 +50,7 @@ header {
 .progress-bar {
     height: 100%;
     width: 0%;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     transition: width 0.3s ease;
 }
 
@@ -63,27 +64,81 @@ header {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* --- Question Styling --- */
+/* --- Start Screen Styling --- */
+#intro-screen {
+    text-align: center;
+    padding: 50px 20px;
+}
+#startButton {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+#startButton:hover {
+    background-color: #306bd1;
+}
+
+/* --- Question Container for Stacking and Scrolling (Key Change) --- */
+#question-section {
+    position: relative;
+    /* Use a fixed height and enable scrolling */
+    height: var(--quiz-height); 
+    overflow-y: scroll;
+    padding: 20px 0;
+    /* Hide scrollbar but keep scroll functionality */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    scroll-behavior: smooth;
+}
+#question-section::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+
+/* --- Question Block Styling (Key Change) --- */
 .question-block {
-    margin-bottom: 40px;
-    padding-bottom: 30px;
-    border-bottom: 1px solid #eee;
-    opacity: 0;
-    transition: opacity 0.5s ease;
+    position: absolute; /* Stack all blocks */
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    pointer-events: none; /* Disables interaction by default */
+    
+    /* Center the question block horizontally within the scrolling container */
+    left: 50%;
+    transform: translateX(-50%); 
+
+    /* Initial state (faded out) */
+    opacity: 0.2;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .question-block.active {
-    opacity: 1;
+    opacity: 1; /* Fully visible */
+    pointer-events: auto; /* Re-enable interaction for the active question */
+    z-index: 10;
+    /* Ensure the active question is clearly positioned */
 }
 
 .question-text {
     font-size: 1.25em;
     font-weight: 300;
-    text-align: center;
     margin: 20px 0;
     color: var(--text-color);
 }
 
+/* Fade out non-active questions */
+.question-block:not(.active) {
+    transform: translateX(-50%) scale(0.9); /* Slightly smaller and faded */
+}
+
+
+/* --- Custom Radio Button Styling (Key Change for Sizes) --- */
 .options-container {
     display: flex;
     justify-content: space-between;
@@ -99,19 +154,17 @@ header {
 
 .options-wrapper {
     display: flex;
-    gap: 10px;
+    gap: 5px; /* Smaller gap */
     justify-content: center;
     flex-grow: 1;
 }
 
-/* Custom Radio Button Styling */
 .option-input {
     display: none; /* Hide the default radio button */
 }
 
+/* Base circle size */
 .option-circle {
-    width: 40px;
-    height: 40px;
     border-radius: 50%;
     border: 3px solid var(--medium-gray);
     background-color: white;
@@ -122,44 +175,53 @@ header {
     justify-content: center;
 }
 
-/* Hover and Focus States */
+/* Apply different sizes based on position: (Big, Small, Smallest, Small, Big) */
+.options-wrapper label:nth-child(1) .option-circle,
+.options-wrapper label:nth-child(5) .option-circle {
+    width: 45px; height: 45px; /* Big */
+}
+.options-wrapper label:nth-child(2) .option-circle,
+.options-wrapper label:nth-child(4) .option-circle {
+    width: 35px; height: 35px; /* Small */
+}
+.options-wrapper label:nth-child(3) .option-circle {
+    width: 25px; height: 25px; /* Smallest (Middle) */
+    border-width: 2px;
+}
+
+/* Hover and Checked States */
 .option-circle:hover {
     border-color: var(--primary-color);
 }
 
-/* Checked State (Styles similar to the image) */
 .option-input:checked + .option-circle {
-    /* Styles for the "active" or "Strongly Agree/Disagree" ends */
     border-width: 4px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Specific colors for the extreme ends */
 /* Score 1 (Strongly Disagree/Left) - Blue */
 .question-block:nth-child(n) .options-wrapper label:first-child .option-input:checked + .option-circle {
     border-color: var(--primary-color);
-    background-color: rgba(62, 123, 255, 0.1); /* Light blue fill */
+    background-color: rgba(62, 123, 255, 0.1);
 }
 
 /* Score 5 (Strongly Agree/Right) - Green */
 .question-block:nth-child(n) .options-wrapper label:last-child .option-input:checked + .option-circle {
     border-color: var(--secondary-color);
-    background-color: rgba(39, 174, 96, 0.1); /* Light green fill */
+    background-color: rgba(39, 174, 96, 0.1);
 }
 
 
-/* --- Results Styling --- */
+/* --- Results & Footer Styling --- (Keep the rest of the styles) */
 #results-section {
     text-align: center;
     padding: 30px;
 }
-
 #results-section h2 {
     color: var(--primary-color);
     font-size: 2em;
     margin-bottom: 30px;
 }
-
 #results-list {
     display: flex;
     flex-wrap: wrap;
@@ -167,7 +229,6 @@ header {
     gap: 20px;
     margin-bottom: 30px;
 }
-
 .result-card {
     background-color: var(--light-gray);
     border-radius: 8px;
@@ -178,29 +239,24 @@ header {
     border-left: 5px solid var(--primary-color);
     transition: transform 0.3s ease;
 }
-
 .result-card.first-place {
     border-left-color: var(--secondary-color);
-    background-color: #e8f5e9; /* Lighter green */
+    background-color: #e8f5e9;
     transform: scale(1.05);
 }
-
 .result-card h3 {
     margin-top: 0;
     color: var(--text-color);
     font-weight: 600;
 }
-
 .result-card p {
     font-size: 1.5em;
     font-weight: bold;
     color: var(--primary-color);
 }
-
 .result-card.first-place p {
     color: var(--secondary-color);
 }
-
 #restart-button {
     background-color: var(--primary-color);
     color: white;
@@ -212,16 +268,13 @@ header {
     font-weight: 600;
     transition: background-color 0.3s;
 }
-
 #restart-button:hover {
     background-color: #306bd1;
 }
-
-/* --- Footer --- */
 .footer {
     padding: 10px;
     text-align: center;
     font-size: 0.8em;
     color: #999;
-    margin-top: auto; /* Push footer to the bottom */
+    margin-top: auto;
 }
