@@ -18,8 +18,29 @@ body {
     display: flex;
     flex-direction: column;
 }
-
 header {
+    background-color: white;
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    height: 65px; /* keeps header small */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 55px;  
+    height: 55px;
+    object-fit: contain;
+    display: block;
+}
+
+/* header {
     background-color: white;
     padding: 15px 5%;
     display: flex;
@@ -34,7 +55,7 @@ header {
     height: 150px;  
     object-fit: contain;
     display: block;
-}
+} */
 
 #intro-screen {
     text-align: center; 
