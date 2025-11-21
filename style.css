@@ -28,7 +28,7 @@ header {
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-.logo { font-size: 2em; font-weight: 600; color: var(--primary-color); }
+.logo { font-size: 2em; font-weight: 600; }
 
 #intro-screen {
     text-align: center; 
