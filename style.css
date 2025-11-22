@@ -67,6 +67,51 @@ header {
     background: linear-gradient(135deg, #1d5fe6, #4a8cff);
 }
 
+/* --- Results Layout Update (Top 1 big + 2 small side-by-side) --- */
+
+#results-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Holds the 2 smaller cards under the winner */
+.result-bottom-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    gap: 20px;
+    width: 100%;
+    max-width: 700px;
+    flex-wrap: nowrap; /* prevents stacking */
+}
+
+/* Each smaller result card */
+.small-card {
+    flex: 0 0 300px;   /* forces them to sit side by side */
+    max-width: 300px;
+    background: white;
+    border-radius: 12px;
+    padding: 18px 20px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* Mobile: stack only on small screens */
+@media screen and (max-width: 600px) {
+    .result-bottom-row {
+        flex-wrap: wrap;
+    }
+
+    .small-card {
+        flex: 0 0 100%;
+        max-width: 90%;
+    }
+}
+
+
 /* Subtle pulse animation */
 @keyframes pulseGlow {
     0% {
